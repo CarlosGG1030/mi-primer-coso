@@ -1,0 +1,13 @@
+.contenedor2 {
+    width: 300px; /* Ancho del cuadrado */
+    height: 200px; /* Alto del cuadrado */
+    background-color: #fff;
+    border: px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-style: none;
+}

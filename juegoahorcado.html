@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego del Ahorcado</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        #palabra { font-size: 24px; margin-bottom: 20px; }
+        #letras { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Juego del Ahorcado</h1>
+    <div id="palabra">Palabra: </div>
+    <div id="letras">Letras adivinadas: </div>
+    <div id="intentos">Intentos restantes: 6</div>
+    <input type="text" id="entrada" maxlength="1" placeholder="Adivina una letra">
+    <button onclick="adivinar()">Adivinar</button>
+    <div id="resultado"></div>
+
+    <script>
+        const palabras = ["python", "programacion", "ahorcado", "juego", "computadora"];
+        let palabra = palabras[Math.floor(Math.random() * palabras.length)];
+        let letrasAdivinadas = [];
+        let intentosRestantes = 6;
+
+        function mostrarPalabra() {
+            let palabraOculta = palabra.split('').map(letra => letrasAdivinadas.includes(letra) ? letra : '_').join(' ');
+            document.getElementById('palabra').innerText = `Palabra: ${palabraOculta}`;
+        }
+
+        function adivinar() {
+            let letra = document.getElementById('entrada').value.toLowerCase();
+            document.getElementById('entrada').value = '';
+
+            if (letrasAdivinadas.includes(letra)) {
+                alert("Ya adivinaste esa letra.");
+            } else {
+                letrasAdivinadas.push(letra);
+                if (palabra.includes(letra)) {
+                    alert("¡Correcto!");
+                } else {
+                    intentosRestantes--;
+                    alert("Incorrecto.");
+                }
+            }
+
+            document.getElementById('intentos').innerText = `Intentos restantes: ${intentosRestantes}`;
+            mostrarPalabra();
+
+            if (intentosRestantes <= 0) {
+                document.getElementById('resultado').innerText = `¡Has perdido! La palabra era: ${palabra}`;
+                document.getElementById('entrada').disabled = true;
+            } else if (palabra.split('').every(letra => letrasAdivinadas.includes(letra))) {
+                document.getElementById('resultado').innerText = `¡Felicidades! Has adivinado la palabra: ${palabra}`;
+                document.getElementById('entrada').disabled = true;
+            }
+
+            document.getElementById('letras').innerText = `Letras adivinadas: ${letrasAdivinadas.join(', ')}`;
+        }
+
+        mostrarPalabra();
+    </script>
+</body>
+</html>
